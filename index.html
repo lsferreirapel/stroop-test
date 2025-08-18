@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <style>
+      /* http://meyerweb.com/eric/tools/css/reset/ 
+      v2.0 | 20110126
+      License: none (public domain)
+    */
+      html,
+      body,
+      div,
+      span,
+      applet,
+      object,
+      iframe,
+      h1,
+      h2,
+      h3,
+      h4,
+      h5,
+      h6,
+      p,
+      blockquote,
+      pre,
+      a,
+      abbr,
+      acronym,
+      address,
+      big,
+      cite,
+      code,
+      del,
+      dfn,
+      em,
+      img,
+      ins,
+      kbd,
+      q,
+      s,
+      samp,
+      small,
+      strike,
+      strong,
+      sub,
+      sup,
+      tt,
+      var,
+      b,
+      u,
+      i,
+      center,
+      dl,
+      dt,
+      dd,
+      ol,
+      ul,
+      li,
+      fieldset,
+      form,
+      label,
+      legend,
+      table,
+      caption,
+      tbody,
+      tfoot,
+      thead,
+      tr,
+      th,
+      td,
+      article,
+      aside,
+      canvas,
+      details,
+      embed,
+      figure,
+      figcaption,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      output,
+      ruby,
+      section,
+      summary,
+      time,
+      mark,
+      audio,
+      video {
+        margin: 0;
+        padding: 0;
+        border: 0;
+        font-size: 100%;
+        font: inherit;
+        vertical-align: baseline;
+      }
+      /* HTML5 display-role reset for older browsers */
+      article,
+      aside,
+      details,
+      figcaption,
+      figure,
+      footer,
+      header,
+      hgroup,
+      menu,
+      nav,
+      section {
+        display: block;
+      }
+      body {
+        line-height: 1;
+      }
+      ol,
+      ul {
+        list-style: none;
+      }
+      blockquote,
+      q {
+        quotes: none;
+      }
+      blockquote:before,
+      blockquote:after,
+      q:before,
+      q:after {
+        content: "";
+        content: none;
+      }
+      table {
+        border-collapse: collapse;
+        border-spacing: 0;
+      }
+
+      #text {
+        position: absolute;
+        font-size: 200px;
+      }
+
+      #start, #stop {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        font-size: 25px;
+      }
+    </style>
+  </head>
+  <body
+    style="
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+      width: 100vw;
+    "
+  >
+    <h1 id="text"></h1>
+    <button id="start">Iniciar</button>
+    <button id="stop" style="display:none;">Parar</button>
+  </body>
+  <script>
+    const texts = ["Vermelho", "Azul", "Verde"];
+    const colors = ["red", "blue", "green"];
+
+    const startButtonEl = document.querySelector("#start");
+    const stopButtonEl = document.querySelector("#stop");
+    const textEl = document.querySelector("#text");
+
+    let intervalId = null;
+
+    function getRandomItem(arr) {
+      const randomIndex = Math.floor(Math.random() * arr.length);
+      return arr[randomIndex];
+    }
+
+    function randomizeTextContentAndColor() {
+      textEl.textContent = getRandomItem(texts);
+      textEl.style.color = getRandomItem(colors);
+    }
+
+    function randomizeTextPosition() {
+      const width = window.innerWidth - textEl.offsetWidth;
+      const height = window.innerHeight - textEl.offsetHeight;
+
+      const x = Math.floor(Math.random() * width);
+      const y = Math.floor(Math.random() * height);
+
+      textEl.style.left = x + "px";
+      textEl.style.top = y + "px";
+    }
+
+    function cb() {
+      randomizeTextContentAndColor();
+      randomizeTextPosition();
+    }
+
+    startButtonEl.addEventListener("click", () => {
+      textEl.textContent = 3;
+
+      setTimeout(() => {
+        textEl.textContent = 2;
+      }, 1000);
+      
+      setTimeout(() => {
+        textEl.textContent = 1;
+        intervalID = setInterval(cb, 1000);
+      }, 2000);
+
+      setTimeout(() => {
+        stopButtonEl.style.display = "inline-block";
+      }, 3000)
+
+      startButtonEl.style.display = "none";
+    });
+
+
+    stopButtonEl.addEventListener("click", () => {
+      clearInterval(intervalID);
+      intervalID = null;
+
+
+      textEl.style.left = null;
+      textEl.style.top = null;
+      textEl.textContent = null;
+      textEl.style.color = "black";
+      stopButtonEl.style.display = "none";
+      startButtonEl.style.display = "inline-block";
+    });
+  </script>
+</html>
